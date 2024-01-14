@@ -1,0 +1,20 @@
+import http from 'k6/http';
+import { sleep } from 'k6';
+import { check, fail } from "k6";
+
+export default function () {
+    let res = http.get('http://localhost:3000/api/v1/categorie')
+    
+    let durationMsg = 'Falha na execução do cenário de teste categoria'
+
+    if(!check(res, {
+        'is statuscode 200 - enpoint categorias': (r) => r.status === 200
+    })){
+        fail(durationMsg);
+    }
+    
+    sleep(1);
+
+}
+
+
